@@ -54,7 +54,11 @@ jobs:
       - name: Create branch and commit
         if: steps.result.outputs.ok == 'true'
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # Use the PAT (stored as a repo secret) instead of GITHUB_TOKEN,
+          # because the default GITHUB_TOKEN can't open PRs unless the repo
+          # setting "Allow GitHub Actions to create and approve pull requests"
+          # is enabled in the web UI. PATs bypass that restriction.
+          GH_TOKEN: ${{ secrets.ACTIONS_PAT }}
         run: |
           # Pick the JSON file the parser updated
           FEED="${{ steps.result.outputs.feed }}"
@@ -66,6 +70,10 @@ jobs:
 
           BRANCH="submission-${{ github.event.issue.number }}"
 
+          # If a previous run left a stale branch (e.g. user edited the issue
+          # to fix a typo), delete it so we can push a fresh one.
+          git push origin --delete "$BRANCH" 2>/dev/null || true
+
           git config user.name "robloxxea-bot"
           git config user.email "bot@users.noreply.github.com"
           git checkout -b "$BRANCH"
@@ -74,7 +82,10 @@ jobs:
 
           Submitted by @${{ github.event.issue.user.login }} via issue #${{ github.event.issue.number }}.
           Loadstring auto-verified by process_submission.py."
-          git push origin "$BRANCH"
+
+          # Push using the PAT — embed it in the remote URL so git auth works
+          # without prompting.
+          git push "https://x-access-token:${{ secrets.ACTIONS_PAT }}@github.com/M7mD0X/robloxxea-data.git" "$BRANCH"
 
           # Open a PR from the branch
           PR_BODY="## New tool submission
@@ -102,7 +113,7 @@ jobs:
       - name: Comment on issue with PR link (success)
         if: steps.result.outputs.ok == 'true'
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.ACTIONS_PAT }}
         run: |
           # Find the PR we just created for this issue number
           BRANCH="submission-${{ github.event.issue.number }}"
