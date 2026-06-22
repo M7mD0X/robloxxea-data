@@ -1,0 +1,148 @@
+name: Process tool submission
+
+on:
+  issues:
+    types: [opened, edited]
+
+permissions:
+  contents: write   # to commit JSON + open a PR
+  issues: write     # to comment on / close / label the issue
+  pull-requests: write  # to open the auto-PR
+
+jobs:
+  process:
+    # Only run on issues with the 'submission' label (set by the issue form).
+    # Re-run on edit so users can fix a broken submission and the bot retries.
+    if: contains(github.event.issue.labels.*.name, 'submission')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Parse + validate submission
+        id: parse
+        env:
+          ISSUE_BODY: ${{ github.event.issue.body }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          ISSUE_AUTHOR: ${{ github.event.issue.user.login }}
+        run: |
+          python3 process_submission.py
+        continue-on-error: true
+
+      - name: Read result
+        id: result
+        if: always()
+        run: |
+          if [ -f result.json ]; then
+            ok=$(jq -r '.ok' result.json)
+            echo "ok=$ok" >> "$GITHUB_OUTPUT"
+            echo "reason=$(jq -r '.reason' result.json)" >> "$GITHUB_OUTPUT"
+            echo "feed=$(jq -r '.feed // "community"' result.json)" >> "$GITHUB_OUTPUT"
+            echo "tool_name=$(jq -r '.tool.name // ""' result.json)" >> "$GITHUB_OUTPUT"
+            echo "tool_id=$(jq -r '.tool.id // ""' result.json)" >> "$GITHUB_OUTPUT"
+          else
+            echo "ok=false" >> "$GITHUB_OUTPUT"
+            echo "reason=Script crashed before writing result.json" >> "$GITHUB_OUTPUT"
+          fi
+
+      # --- SUCCESS PATH: open an auto-PR ---
+      - name: Create branch and commit
+        if: steps.result.outputs.ok == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Pick the JSON file the parser updated
+          FEED="${{ steps.result.outputs.feed }}"
+          if [ "$FEED" = "Main Tools" ]; then
+            FILE="mainTools.json"
+          else
+            FILE="communityTools.json"
+          fi
+
+          BRANCH="submission-${{ github.event.issue.number }}"
+
+          git config user.name "robloxxea-bot"
+          git config user.email "bot@users.noreply.github.com"
+          git checkout -b "$BRANCH"
+          git add "$FILE"
+          git commit -m "feat(data): add ${{ steps.result.outputs.tool_name }} (closes #${{ github.event.issue.number }})
+
+          Submitted by @${{ github.event.issue.user.login }} via issue #${{ github.event.issue.number }}.
+          Loadstring auto-verified by process_submission.py."
+          git push origin "$BRANCH"
+
+          # Open a PR from the branch
+          PR_BODY="## New tool submission
+
+          | Field | Value |
+          |---|---|
+          | **Tool** | ${{ steps.result.outputs.tool_name }} |
+          | **ID** | \`${{ steps.result.outputs.tool_id }}\` |
+          | **Feed** | $FEED |
+          | **File** | \`$FILE\` |
+          | **Submitter** | @${{ github.event.issue.user.login }} |
+          | **Source issue** | #${{ github.event.issue.number }} |
+
+          The loadstring was auto-verified (HTTP 200 + Lua source). Review the
+          diff, then click **Merge** to publish. Merging this PR will close
+          the source issue automatically."
+
+          gh pr create \
+            --base main \
+            --head "$BRANCH" \
+            --title "feat(data): add ${{ steps.result.outputs.tool_name }}" \
+            --body "$PR_BODY" \
+            --label "auto-generated"
+
+      - name: Comment on issue with PR link (success)
+        if: steps.result.outputs.ok == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Find the PR we just created for this issue number
+          BRANCH="submission-${{ github.event.issue.number }}"
+          PR_URL=$(gh pr list --head "$BRANCH" --json url --jq '.[0].url')
+
+          gh issue comment ${{ github.event.issue.number }} --body "✅ **Submission verified!**
+
+          The loadstring was fetched and confirmed to return real Lua source code. A pull request has been opened automatically:
+
+          → $PR_URL
+
+          A maintainer will review and merge. Once merged, the tool appears in the RobloxXea app within ~24 hours (cached by the service worker).
+
+          Thanks for the contribution, @${{ github.event.issue.user.login }}!"
+
+          # Add 'pending-review' label so maintainers can find submissions to merge
+          gh issue edit ${{ github.event.issue.number }} --add-label "pending-review"
+
+      # --- FAILURE PATH: comment with the error ---
+      - name: Comment on issue with validation error
+        if: steps.result.outputs.ok == 'false'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh issue comment ${{ github.event.issue.number }} --body "❌ **Submission needs revision**
+
+          The bot couldn't process this submission. Reason:
+
+          > ${{ steps.result.outputs.reason }}
+
+          **What to do:**
+          1. Edit this issue and fix the problem described above.
+          2. Save. The bot will automatically re-run the validation.
+
+          Common fixes:
+          - **404 / loadstring doesn't resolve:** Double-check the raw GitHub URL. Common mistakes: wrong branch name (try \`main\` vs \`master\`), wrong filename (case-sensitive), wrong path.
+          - **Missing required fields:** Fill in every field marked with a red asterisk.
+          - **Invalid category / feed / icon color:** Pick from the dropdown options only.
+          - **Repository URL must start with \`https://github.com/\`:** No raw URLs, no pastebin, no other hosts."
+
+          # Remove 'pending-review' if present, add 'needs-revision'
+          gh issue edit ${{ github.event.issue.number }} --remove-label "pending-review" || true
+          gh issue edit ${{ github.event.issue.number }} --add-label "needs-revision"

@@ -1,0 +1,140 @@
+name: Submit a tool
+description: Propose a new Roblox scripting tool for the RobloxXea directory.
+title: "[Submission] <tool name here>"
+labels: ["submission"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for contributing to RobloxXea! Fill out the form below and a
+        maintainer will review your submission.
+
+        **Requirements:**
+        - The tool must be open-source and publicly hosted on GitHub.
+        - The loadstring must actually work — when the issue is submitted,
+          a bot will fetch the URL and verify it returns real Lua source.
+          If the loadstring 404s or returns something that isn't Lua, the
+          bot will comment with the error and the submission won't be
+          processed until you edit the issue.
+        - The tool must not be malware, a key-stealer, or a known malicious
+          script. Submissions are reviewed by a human before merge.
+
+  - type: input
+    id: name
+    attributes:
+      label: Tool name
+      description: The display name shown on the tool card.
+      placeholder: "e.g. Infinite Yield"
+    validations:
+      required: true
+
+  - type: input
+    id: author
+    attributes:
+      label: Author
+      description: GitHub username or org that maintains the tool.
+      placeholder: "e.g. EdgeIY"
+    validations:
+      required: true
+
+  - type: input
+    id: repo
+    attributes:
+      label: Repository URL
+      description: Full HTTPS URL to the GitHub repository.
+      placeholder: "https://github.com/EdgeIY/infiniteyield"
+    validations:
+      required: true
+
+  - type: input
+    id: loadstring
+    attributes:
+      label: Loadstring
+      description: |
+        The exact Lua snippet a user pastes into their executor. Must be in
+        the form `loadstring(game:HttpGet('URL'))()` or
+        `loadstring(game:HttpGetAsync("URL"))()`.
+      placeholder: "loadstring(game:HttpGet('https://raw.githubusercontent.com/.../file.lua'))()"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: category
+    attributes:
+      label: Category
+      description: Pick the closest match — the card's chip label comes from this.
+      options:
+        - Admin Commands
+        - ESP / Visuals
+        - Remote Spy
+        - UI Library
+        - Explorer
+        - Script Hub
+        - Performance
+        - Combat
+        - Auto-Farm
+        - Utility
+        - Library
+    validations:
+      required: true
+
+  - type: dropdown
+    id: feed
+    attributes:
+      label: Feed
+      description: |
+        **Main Tools** = curated, hand-picked, universally useful tools
+        (admin scripts, UI libraries, ESP, etc.). **Community** = everything
+        else — game-specific farms, niche utilities, experimental tools.
+      options:
+        - Community
+        - Main Tools
+      default: 0
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: 1-3 accurate sentences. No marketing fluff — describe what the tool actually does.
+      placeholder: "The most popular universal admin command script for Roblox. 100+ commands including fly, noclip, teleport, and a command-line interface."
+    validations:
+      required: true
+
+  - type: input
+    id: tags
+    attributes:
+      label: Tags
+      description: Comma-separated, lowercase. Shown as `#tag` chips on the card.
+      placeholder: "admin, universal, commands, fly"
+    validations:
+      required: false
+
+  - type: input
+    id: icon
+    attributes:
+      label: Icon initials (optional)
+      description: 2-3 letters shown in the colored tile. Defaults to the first 2 letters of the tool name.
+      placeholder: "IY"
+    validations:
+      required: false
+
+  - type: input
+    id: iconColor
+    attributes:
+      label: Icon color (optional)
+      description: Hex color for the icon tile. Pick from #22d3ee (cyan), #a855f7 (purple), #ec4899 (pink), or #4ade80 (green).
+      placeholder: "#22d3ee"
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Code of conduct
+      options:
+        - label: I confirm this tool is open-source, not malware, and the loadstring works as described.
+          required: true
+        - label: I understand a bot will fetch the loadstring URL on submit and a maintainer will review before merge.
+          required: true
