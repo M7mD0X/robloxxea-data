@@ -1,7 +1,7 @@
 {
   "_meta": {
     "name": "RobloxXea \u2014 Community Tools Feed",
-    "version": "2.0.1",
+    "version": "2.0.2",
     "updated": "2026-06-22",
     "description": "Auto-updating community library. Every loadstring here has been HTTP-verified (HTTP 200 + real Lua source) against its canonical GitHub repository. In production, host this file at a raw GitHub URL (see CommunityTools.tsx) and re-fetch on every app launch. Same shape as mainTools.json so the same ToolCard renders both feeds."
   },
@@ -185,6 +185,26 @@
       "verified": true,
       "lastVerified": "2026-06-22",
       "verifiedSizeBytes": 15736
+    },
+    {
+      "id": "ez-hub",
+      "name": "Ez Hub",
+      "author": "debug420",
+      "category": "Script Hub",
+      "description": "An open-source script hub that exploits vulnerabilities in popular Roblox games. Modular \u2014 has a Plugins folder where the community can drop in their own modules.",
+      "loadstring": "loadstring(game:HttpGet('https://raw.githubusercontent.com/debug420/Ez-Hub/master/EzHub.lua'))()",
+      "repo": "https://github.com/debug420/Ez-Hub",
+      "icon": "EZ",
+      "iconColor": "#ec4899",
+      "tags": [
+        "hub",
+        "universal",
+        "plugins"
+      ],
+      "featured": false,
+      "verified": true,
+      "lastVerified": "2026-06-22",
+      "verifiedSizeBytes": 121136
     }
   ]
 }
