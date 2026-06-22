@@ -1,0 +1,85 @@
+name: Verify loadstrings
+
+on:
+  # Re-verify every Monday at 08:00 UTC — catches repos that went dark over the weekend.
+  schedule:
+    - cron: '0 8 * * 1'
+  # Re-verify on every push to main (covers community PRs adding new tools).
+  push:
+    branches: [main]
+  # Manual trigger from the Actions tab.
+  workflow_dispatch:
+
+permissions:
+  contents: write   # to commit the updated JSON (verified/lastVerified fields)
+  issues: write     # to open an issue when a loadstring breaks
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Run verifier
+        id: verify
+        run: |
+          python3 verify_loadstrings.py > verify_output.txt 2>&1
+          echo "exit_code=$?" >> "$GITHUB_OUTPUT"
+          cat verify_output.txt
+        continue-on-error: true
+
+      - name: Commit updated verification metadata
+        # Always commit — even if some are broken, the metadata update is valuable.
+        if: always()
+        run: |
+          git config user.name "robloxxea-bot"
+          git config user.email "bot@users.noreply.github.com"
+          git add mainTools.json communityTools.json verification-report.md 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "No metadata changes to commit."
+          else
+            git commit -m "chore(data): weekly loadstring verification
+
+          Ran by GitHub Actions on $(date -u +%Y-%m-%dT%H:%M:%SZ).
+          See verification-report.md for details."
+            git push
+          fi
+
+      - name: Open or update issue on broken loadstrings
+        if: steps.verify.outputs.exit_code == '1'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Check for an existing open issue to avoid spamming.
+          existing=$(gh issue list --state open --label "loadstrings-broken" --json number,title --jq '.[0].number')
+          body="$(cat verification-report.md)"
+          if [ -z "$existing" ]; then
+            gh issue create \
+              --title "Broken loadstrings detected — $(date -u +%Y-%m-%d)" \
+              --label "loadstrings-broken" \
+              --body "$body"
+            echo "Created new issue."
+          else
+            gh issue comment "$existing" --body "Re-verified on $(date -u +%Y-%m-%dT%H:%M:%SZ).
+
+          $body"
+            echo "Commented on existing issue #$existing."
+          fi
+
+      - name: Close issue when all loadstrings verified
+        if: steps.verify.outputs.exit_code == '0'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          existing=$(gh issue list --state open --label "loadstrings-broken" --json number --jq '.[0].number')
+          if [ -n "$existing" ]; then
+            gh issue comment "$existing" --body "All loadstrings verified OK on $(date -u +%Y-%m-%dT%H:%M:%SZ). Closing."
+            gh issue close "$existing"
+            echo "Closed issue #$existing."
+          fi

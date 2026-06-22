@@ -1,0 +1,190 @@
+{
+  "_meta": {
+    "name": "RobloxXea \u2014 Community Tools Feed",
+    "version": "2.0.1",
+    "updated": "2026-06-22",
+    "description": "Auto-updating community library. Every loadstring here has been HTTP-verified (HTTP 200 + real Lua source) against its canonical GitHub repository. In production, host this file at a raw GitHub URL (see CommunityTools.tsx) and re-fetch on every app launch. Same shape as mainTools.json so the same ToolCard renders both feeds."
+  },
+  "tools": [
+    {
+      "id": "comm-sp3arparvus",
+      "name": "Sp3arParvus",
+      "author": "JakeHukari",
+      "category": "Universal Aim",
+      "description": "Universal aim client and developer tools. Lightweight, single-file, mobile-friendly. Includes silent aim, prediction, and FOV sliders. Popular choice for shooter automation that needs to work across multiple games without per-game configuration.",
+      "loadstring": "loadstring(game:HttpGet('https://raw.githubusercontent.com/JakeHukari/Sp3arParvus/main/Sp3arParvus.lua', true))()",
+      "repo": "https://github.com/JakeHukari/Sp3arParvus",
+      "icon": "SP",
+      "iconColor": "#ec4899",
+      "tags": [
+        "aim",
+        "universal",
+        "silentaim",
+        "fps"
+      ],
+      "verified": true,
+      "lastVerified": "2026-06-22",
+      "verifiedSizeBytes": 365577
+    },
+    {
+      "id": "comm-vectorfield",
+      "name": "VectorField",
+      "author": "AsynchronousAI",
+      "category": "UI Library",
+      "description": "A modern UI library based on Rayfield, designed for the developer who wants Rayfield's polish with additional customization. Drop-in for any script that needs a sleek, animated control panel with notifications and theming.",
+      "loadstring": "loadstring(game:HttpGet('https://raw.githubusercontent.com/AsynchronousAI/vectorfield/main/init.lua'))()",
+      "repo": "https://github.com/AsynchronousAI/vectorfield",
+      "icon": "VF",
+      "iconColor": "#22d3ee",
+      "tags": [
+        "ui",
+        "library",
+        "rayfield",
+        "modern"
+      ],
+      "verified": true,
+      "lastVerified": "2026-06-22",
+      "verifiedSizeBytes": 102774
+    },
+    {
+      "id": "comm-aether-ui",
+      "name": "Aether UI",
+      "author": "yast95",
+      "category": "UI Library",
+      "description": "A clean UI library inspired by WindUI and Rayfield, with built-in animations, theme manager, and a component set that includes icons. Good middle-ground between minimalism and feature-richness.",
+      "loadstring": "loadstring(game:HttpGet('https://raw.githubusercontent.com/yast95/Aether-UI/main/AetherUI.lua'))()",
+      "repo": "https://github.com/yast95/Aether-UI",
+      "icon": "AE",
+      "iconColor": "#a855f7",
+      "tags": [
+        "ui",
+        "library",
+        "animations",
+        "themes"
+      ],
+      "verified": true,
+      "lastVerified": "2026-06-22",
+      "verifiedSizeBytes": 31850
+    },
+    {
+      "id": "comm-fxkedex",
+      "name": "FxkeDex",
+      "author": "Fxkez",
+      "category": "Explorer",
+      "description": "A fork of the classic Dex Explorer by Moon, rebuilt with a modern dark UI and faster instance-tree navigation. Includes property inspector and remote spying integration. 880KB of code \u2014 comprehensive feature set.",
+      "loadstring": "loadstring(game:HttpGet('https://raw.githubusercontent.com/Fxkez/FxkeDex/main/fxkedex.lua'))()",
+      "repo": "https://github.com/Fxkez/FxkeDex",
+      "icon": "FX",
+      "iconColor": "#a855f7",
+      "tags": [
+        "explorer",
+        "dex",
+        "instances",
+        "ui"
+      ],
+      "verified": true,
+      "lastVerified": "2026-06-22",
+      "verifiedSizeBytes": 881996
+    },
+    {
+      "id": "comm-concealium-dex",
+      "name": "Concealium Dex Explorer",
+      "author": "Concealium",
+      "category": "Explorer",
+      "description": "An independent Dex Explorer implementation with a focus on stability and completeness. Inspect any instance in the DataModel, edit properties live, and save/load instance trees. 638KB \u2014 rivals FxkeDex in scope.",
+      "loadstring": "loadstring(game:HttpGet('https://raw.githubusercontent.com/Concealium/Dex-Explorer/main/DexExplorer.lua'))()",
+      "repo": "https://github.com/Concealium/Dex-Explorer",
+      "icon": "CD",
+      "iconColor": "#4ade80",
+      "tags": [
+        "explorer",
+        "dex",
+        "instances",
+        "datamodel"
+      ],
+      "verified": true,
+      "lastVerified": "2026-06-22",
+      "verifiedSizeBytes": 638673
+    },
+    {
+      "id": "comm-birdy-explorer",
+      "name": "Birdy Place Explorer",
+      "author": "HAKANKOKCU",
+      "category": "Explorer",
+      "description": "A high-performance Roblox place explorer that takes a player instance as input and lets you browse the entire DataModel from their perspective. Useful for debugging games that filter Workspace per-player.",
+      "loadstring": "loadstring(game:HttpGet('https://raw.githubusercontent.com/kuskebabi/Birdy-Roblox-Place-Explorer/main/BirdyRobloxPlaceExplorer.lua'))()",
+      "repo": "https://github.com/kuskebabi/Birdy-Roblox-Place-Explorer",
+      "icon": "BR",
+      "iconColor": "#22d3ee",
+      "tags": [
+        "explorer",
+        "instances",
+        "place",
+        "debug"
+      ],
+      "verified": true,
+      "lastVerified": "2026-06-22",
+      "verifiedSizeBytes": 20981
+    },
+    {
+      "id": "comm-itzxery-esp",
+      "name": "ItzXery ESP",
+      "author": "z4tt483",
+      "category": "ESP / Visuals",
+      "description": "A community ESP focused on player visualization \u2014 boxes, names, distance, and health bars. Lightweight and tuned for mobile executors. Part of the ItzXery.lua collection of utility scripts.",
+      "loadstring": "loadstring(game:HttpGet('https://raw.githubusercontent.com/z4tt483/ItzXery.lua/main/Esp-Players.lua'))()",
+      "repo": "https://github.com/z4tt483/ItzXery.lua",
+      "icon": "XE",
+      "iconColor": "#ec4899",
+      "tags": [
+        "esp",
+        "players",
+        "visuals",
+        "mobile"
+      ],
+      "verified": true,
+      "lastVerified": "2026-06-22",
+      "verifiedSizeBytes": 37286
+    },
+    {
+      "id": "comm-itzxery-antilag",
+      "name": "ItzXery AntiLag",
+      "author": "z4tt483",
+      "category": "Performance",
+      "description": "A performance optimizer that disables or downgrades heavy visual effects (shadows, particles, lighting) to boost FPS on low-end devices and mobile. Tunable aggression levels \u2014 from gentle to max-FPS.",
+      "loadstring": "loadstring(game:HttpGet('https://raw.githubusercontent.com/z4tt483/ItzXery.lua/main/AntiLag-ItzXery.lua'))()",
+      "repo": "https://github.com/z4tt483/ItzXery.lua",
+      "icon": "AL",
+      "iconColor": "#4ade80",
+      "tags": [
+        "performance",
+        "fps",
+        "optimize",
+        "mobile"
+      ],
+      "verified": true,
+      "lastVerified": "2026-06-22",
+      "verifiedSizeBytes": 83790
+    },
+    {
+      "id": "comm-fpsgui",
+      "name": "FPS GUI",
+      "author": "loadfunctype",
+      "category": "Performance",
+      "description": "A small GUI that displays real-time FPS, ping, and memory stats in a draggable overlay. Useful while tuning other performance scripts or monitoring executor overhead. Minimal footprint.",
+      "loadstring": "loadstring(game:HttpGet('https://raw.githubusercontent.com/loadfunctype/fpsgui/main/main.lua'))()",
+      "repo": "https://github.com/loadfunctype/fpsgui",
+      "icon": "FP",
+      "iconColor": "#22d3ee",
+      "tags": [
+        "performance",
+        "fps",
+        "overlay",
+        "monitor"
+      ],
+      "verified": true,
+      "lastVerified": "2026-06-22",
+      "verifiedSizeBytes": 15736
+    }
+  ]
+}

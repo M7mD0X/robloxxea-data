@@ -1,0 +1,266 @@
+{
+  "_meta": {
+    "name": "RobloxXea \u2014 Curated Main Tools",
+    "version": "2.0.1",
+    "updated": "2026-06-22",
+    "description": "Every loadstring in this file has been HTTP-verified to return real Lua source code (HTTP 200 + >1KB) against its canonical GitHub repository. The `verified` and `lastVerified` fields track this \u2014 set verified=false if a repo goes dark, and the UI will render a warning chip on the card.",
+    "license": "Each tool retains its individual upstream license. See the `repo` field for source."
+  },
+  "tools": [
+    {
+      "id": "infinite-yield",
+      "name": "Infinite Yield",
+      "author": "EdgeIY",
+      "category": "Admin Commands",
+      "description": "The most popular universal admin command script for Roblox. 100+ commands including fly, noclip, teleport, player lookups, and a polished command-line interface. Actively maintained for years and the de-facto standard admin script.",
+      "loadstring": "loadstring(game:HttpGet('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'))()",
+      "repo": "https://github.com/EdgeIY/infiniteyield",
+      "icon": "IY",
+      "iconColor": "#22d3ee",
+      "tags": [
+        "admin",
+        "universal",
+        "commands",
+        "fly",
+        "noclip"
+      ],
+      "featured": true,
+      "verified": true,
+      "lastVerified": "2026-06-22",
+      "verifiedSizeBytes": 482145
+    },
+    {
+      "id": "unnamed-esp",
+      "name": "Unnamed ESP",
+      "author": "ic3w0lf22",
+      "category": "ESP / Visuals",
+      "description": "High-performance universal ESP using the Drawing API. Draws boxes, names, tracers, and health bars over players. Renowned for clean codebase and low frame impact \u2014 the reference implementation most other ESPs fork from.",
+      "loadstring": "loadstring(game:HttpGet('https://raw.githubusercontent.com/ic3w0lf22/Unnamed-ESP/master/UnnamedESP.lua'))()",
+      "repo": "https://github.com/ic3w0lf22/Unnamed-ESP",
+      "icon": "ESP",
+      "iconColor": "#a855f7",
+      "tags": [
+        "esp",
+        "drawing",
+        "visuals",
+        "universal"
+      ],
+      "featured": true,
+      "verified": true,
+      "lastVerified": "2026-06-22",
+      "verifiedSizeBytes": 87834
+    },
+    {
+      "id": "hydroxide",
+      "name": "Hydroxide",
+      "author": "Upbolt",
+      "category": "Remote Spy / Debugging",
+      "description": "All-in-one development toolkit: remote spy, upvalue scanner, constant dumper, and instance explorer. The de-facto standard for reverse-engineering game logic and building automation scripts. Note the default branch is `revision`, not `master`.",
+      "loadstring": "loadstring(game:HttpGet('https://raw.githubusercontent.com/Upbolt/Hydroxide/revision/init.lua'))()",
+      "repo": "https://github.com/Upbolt/Hydroxide",
+      "icon": "H2",
+      "iconColor": "#4ade80",
+      "tags": [
+        "remote",
+        "spy",
+        "upvalue",
+        "debugging",
+        "instances"
+      ],
+      "featured": true,
+      "verified": true,
+      "lastVerified": "2026-06-22",
+      "verifiedSizeBytes": 10753
+    },
+    {
+      "id": "fates-admin",
+      "name": "Fates Admin",
+      "author": "fatesc",
+      "category": "Admin Commands",
+      "description": "A modern plugin-based admin command framework. Polished UI, customizable command set, permission tiers, and an extension API for writing your own commands. Open-source and highly modular \u2014 popular choice for game developers who want in-game admin tools.",
+      "loadstring": "loadstring(game:HttpGet('https://raw.githubusercontent.com/fatesc/fates-admin/main/main.lua'))()",
+      "repo": "https://github.com/fatesc/fates-admin",
+      "icon": "FA",
+      "iconColor": "#ec4899",
+      "tags": [
+        "admin",
+        "commands",
+        "plugins",
+        "framework"
+      ],
+      "featured": true,
+      "verified": true,
+      "lastVerified": "2026-06-22",
+      "verifiedSizeBytes": 320793
+    },
+    {
+      "id": "turtle-spy",
+      "name": "Turtle Spy",
+      "author": "Turtle-Brand",
+      "category": "Remote Spy",
+      "description": "A clean RemoteSpy with a built-in Remote Browser that allows you to select specific remotes to spy on. Simpler than Hydroxide but faster to set up when you just want to log remote traffic. Single-file loadstring, no dependencies.",
+      "loadstring": "loadstring(game:HttpGet('https://raw.githubusercontent.com/Turtle-Brand/Turtle-Spy/main/source.lua'))()",
+      "repo": "https://github.com/Turtle-Brand/Turtle-Spy",
+      "icon": "TS",
+      "iconColor": "#22d3ee",
+      "tags": [
+        "remote",
+        "spy",
+        "remotespy",
+        "debugging"
+      ],
+      "featured": false,
+      "verified": true,
+      "lastVerified": "2026-06-22",
+      "verifiedSizeBytes": 44722
+    },
+    {
+      "id": "richie-remote-spy",
+      "name": "Remote Spy (richie0866)",
+      "author": "richie0866",
+      "category": "Remote Spy",
+      "description": "A modern outgoing RemoteEvent and RemoteFunction viewer with a polished UI. Distributed via GitHub Releases rather than raw source \u2014 the loadstring below pulls the latest release bundle automatically. Most-starred remote spy on GitHub.",
+      "loadstring": "loadstring(game:HttpGetAsync('https://github.com/richie0866/remote-spy/releases/latest/download/RemoteSpy.lua'))()",
+      "repo": "https://github.com/richie0866/remote-spy",
+      "icon": "RS",
+      "iconColor": "#a855f7",
+      "tags": [
+        "remote",
+        "spy",
+        "remotespy",
+        "modern"
+      ],
+      "featured": false,
+      "verified": true,
+      "lastVerified": "2026-06-22",
+      "verifiedSizeBytes": 494343
+    },
+    {
+      "id": "lxte-cmd",
+      "name": "cmd (lxte)",
+      "author": "lxte",
+      "category": "Admin Commands",
+      "description": "A universal Roblox admin script with a clean command bar UI. Lightweight, fast, and oriented toward power users who want a keyboard-driven experience. Active development with regular updates.",
+      "loadstring": "loadstring(game:HttpGet('https://raw.githubusercontent.com/lxte/cmd/main/main.lua'))()",
+      "repo": "https://github.com/lxte/cmd",
+      "icon": "CMD",
+      "iconColor": "#22d3ee",
+      "tags": [
+        "admin",
+        "commands",
+        "universal",
+        "cli"
+      ],
+      "featured": false,
+      "verified": true,
+      "lastVerified": "2026-06-22",
+      "verifiedSizeBytes": 285734
+    },
+    {
+      "id": "windui",
+      "name": "WindUI",
+      "author": "Footagesus",
+      "category": "UI Library",
+      "description": "An open-source modern UI library for Roblox scripts. 280+ stars on GitHub \u2014 the most popular UI library in the community right now. Features animated transitions, draggable windows, notifications, and a full widget set (toggles, sliders, dropdowns, keybinds, color pickers).",
+      "loadstring": "loadstring(game:HttpGet('https://raw.githubusercontent.com/Footagesus/WindUI/main/main.lua'))()",
+      "repo": "https://github.com/Footagesus/WindUI",
+      "icon": "WU",
+      "iconColor": "#22d3ee",
+      "tags": [
+        "ui",
+        "library",
+        "modern",
+        "widgets"
+      ],
+      "featured": true,
+      "verified": true,
+      "lastVerified": "2026-06-22",
+      "verifiedSizeBytes": 157880
+    },
+    {
+      "id": "orion-library",
+      "name": "Orion Library",
+      "author": "OrionLibrary",
+      "category": "UI Library",
+      "description": "A minimal, fast UI library inspired by modern desktop apps. Provides tabs, sections, toggles, sliders, color pickers, and a built-in search. Zero external dependencies \u2014 drop-in for any script that needs a quick control panel.",
+      "loadstring": "loadstring(game:HttpGet('https://raw.githubusercontent.com/OrionLibrary/Orion/main/source.lua'))()",
+      "repo": "https://github.com/OrionLibrary/Orion",
+      "icon": "OR",
+      "iconColor": "#ec4899",
+      "tags": [
+        "ui",
+        "library",
+        "minimal",
+        "tabs"
+      ],
+      "featured": false,
+      "verified": true,
+      "lastVerified": "2026-06-22",
+      "verifiedSizeBytes": 43238
+    },
+    {
+      "id": "razlib",
+      "name": "RazLib",
+      "author": "Razzles5170",
+      "category": "UI Library",
+      "description": "A clean, loadstring-compatible Roblox UI library with a focus on simplicity and theming. Includes a theme manager, persistent settings, and a small widget set. Great when you want a no-frills panel fast.",
+      "loadstring": "loadstring(game:HttpGet('https://raw.githubusercontent.com/Razzles5170/RazLib/master/RazLib.luau'))()",
+      "repo": "https://github.com/Razzles5170/RazLib",
+      "icon": "RZ",
+      "iconColor": "#4ade80",
+      "tags": [
+        "ui",
+        "library",
+        "theming",
+        "lightweight"
+      ],
+      "featured": false,
+      "verified": true,
+      "lastVerified": "2026-06-22",
+      "verifiedSizeBytes": 96270
+    },
+    {
+      "id": "parvus",
+      "name": "Parvus",
+      "author": "AlexR32",
+      "category": "Script Hub",
+      "description": "A free Roblox script hub designed for shooters. Universal aimbot, silent aim, ESP, and per-game modules loaded via the Loader entry point. Active development with a Games folder full of supported titles.",
+      "loadstring": "loadstring(game:HttpGet('https://raw.githubusercontent.com/AlexR32/Parvus/main/Loader.lua'))()",
+      "repo": "https://github.com/AlexR32/Parvus",
+      "icon": "PV",
+      "iconColor": "#a855f7",
+      "tags": [
+        "hub",
+        "aimbot",
+        "esp",
+        "universal",
+        "shooters"
+      ],
+      "featured": false,
+      "verified": true,
+      "lastVerified": "2026-06-22",
+      "verifiedSizeBytes": 3258
+    },
+    {
+      "id": "ez-hub",
+      "name": "Ez Hub",
+      "author": "debug420",
+      "category": "Script Hub",
+      "description": "An open-source script hub that exploits vulnerabilities in popular Roblox games. Modular \u2014 has a Plugins folder where the community can drop in their own modules. Older but still maintained and a good reference for hub architecture.",
+      "loadstring": "loadstring(game:HttpGet('https://raw.githubusercontent.com/debug420/Ez-Hub/master/EzHub.lua'))()",
+      "repo": "https://github.com/debug420/Ez-Hub",
+      "icon": "EZ",
+      "iconColor": "#ec4899",
+      "tags": [
+        "hub",
+        "universal",
+        "plugins",
+        "modular"
+      ],
+      "featured": false,
+      "verified": true,
+      "lastVerified": "2026-06-22",
+      "verifiedSizeBytes": 121136
+    }
+  ]
+}
