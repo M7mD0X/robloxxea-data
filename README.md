@@ -71,10 +71,25 @@ Both JSON files share the same shape so the app's `ToolCard` component renders t
 
 ## Adding a tool
 
-1. Fork this repo.
-2. Append a new entry to `mainTools.json` or `communityTools.json`. **Fill in all fields except `verified`, `lastVerified`, and `verifiedSizeBytes` — the verifier will populate those automatically on the next run.**
-3. Open a PR. The `Verify loadstrings` workflow runs on push, so your PR will trigger a verification check. **A green check on the workflow means your loadstring actually resolves to real Lua source.**
-4. Once merged, the RobloxXea app picks up the new tool on the next user visit (cached for up to 24h by the service worker).
+There are **two ways** to add a tool, depending on which feed it belongs to:
+
+### Community tab — via issue form (for everyone)
+
+1. Open the [Submit a tool](https://github.com/M7mD0X/robloxxea-data/issues/new?template=submit-a-tool.yml&labels=submission) issue form.
+2. Fill in the fields (name, author, repo URL, loadstring, category, description). The bot auto-verifies the loadstring on submit and opens a PR.
+3. A maintainer reviews and merges. Done.
+
+**All user submissions go to the Community tab.** This is enforced in code (`process_submission.py` rejects any `Feed` field that isn't `Community`), so hand-editing the issue body to say "Main Tools" won't bypass the policy.
+
+### Main Tools tab — via direct PR (maintainer only)
+
+The Main Tools tab is curated by the maintainer (official tools, editor's choice, dev's picks). To add or promote a tool here:
+
+1. Fork the repo.
+2. Append a new entry to `mainTools.json` (or move an entry from `communityTools.json` if promoting). Set `featured: true` for tools that should get a ★ Featured badge.
+3. Fill in all fields except `verified`, `lastVerified`, and `verifiedSizeBytes` — the verifier populates those automatically on the next run.
+4. Open a PR. The `Verify loadstrings` workflow runs on push — a green check means your loadstring actually resolves to real Lua source.
+5. Once merged, the RobloxXea app picks up the new tool on the next user visit (cached for up to 24h by the service worker).
 
 ## URLs the app uses
 

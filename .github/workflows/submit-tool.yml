@@ -90,14 +90,16 @@ jobs:
           |---|---|
           | **Tool** | ${{ steps.result.outputs.tool_name }} |
           | **ID** | \`${{ steps.result.outputs.tool_id }}\` |
-          | **Feed** | $FEED |
+          | **Feed** | Community (user-submitted) |
           | **File** | \`$FILE\` |
           | **Submitter** | @${{ github.event.issue.user.login }} |
           | **Source issue** | #${{ github.event.issue.number }} |
 
           The loadstring was auto-verified (HTTP 200 + Lua source). Review the
-          diff, then click **Merge** to publish. Merging this PR will close
-          the source issue automatically."
+          diff, then click **Merge** to publish to the Community tab. To promote
+          this tool to the Main Tools tab instead, edit \`communityTools.json\`
+          → cut the entry → paste into \`mainTools.json\` → set \`featured: true\`
+          before merging. Merging this PR will close the source issue automatically."
 
           gh pr create \
             --base main \
@@ -121,7 +123,7 @@ jobs:
 
           → $PR_URL
 
-          A maintainer will review and merge. Once merged, the tool appears in the RobloxXea app within ~24 hours (cached by the service worker).
+          A maintainer will review and merge. Once merged, the tool appears in the **Community** tab of the RobloxXea app within ~24 hours (cached by the service worker). Standout submissions may be promoted to the **Main Tools** tab at the maintainer's discretion.
 
           Thanks for the contribution, @${{ github.event.issue.user.login }}!"
 

@@ -19,6 +19,12 @@ body:
         - The tool must not be malware, a key-stealer, or a known malicious
           script. Submissions are reviewed by a human before merge.
 
+        **Where does my submission go?**
+        All user-submitted tools appear in the **Community** tab. The
+        **Main Tools** tab is reserved for the maintainer's curated picks
+        (official tools, editor's choice). Standout community submissions
+        may get promoted to Main Tools by the maintainer after review.
+
   - type: input
     id: name
     attributes:
@@ -78,21 +84,6 @@ body:
     validations:
       required: true
 
-  - type: dropdown
-    id: feed
-    attributes:
-      label: Feed
-      description: |
-        **Main Tools** = curated, hand-picked, universally useful tools
-        (admin scripts, UI libraries, ESP, etc.). **Community** = everything
-        else — game-specific farms, niche utilities, experimental tools.
-      options:
-        - Community
-        - Main Tools
-      default: 0
-    validations:
-      required: true
-
   - type: textarea
     id: description
     attributes:
@@ -136,5 +127,5 @@ body:
       options:
         - label: I confirm this tool is open-source, not malware, and the loadstring works as described.
           required: true
-        - label: I understand a bot will fetch the loadstring URL on submit and a maintainer will review before merge.
+        - label: I understand my submission will appear in the Community tab (not Main Tools), and a maintainer will review before merge.
           required: true

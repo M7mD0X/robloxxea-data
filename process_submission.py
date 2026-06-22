@@ -41,7 +41,11 @@ ALLOWED_CATEGORIES = {
     'Explorer', 'Script Hub', 'Performance', 'Combat', 'Auto-Farm',
     'Utility', 'Library',
 }
-ALLOWED_FEEDS = {'Main Tools', 'Community'}
+# Submissions from the issue form are ALWAYS added to the Community feed.
+# The Main Tools feed is maintainer-curated only (official tools, editor's
+# choice). If a hand-edited issue body contains a 'Feed' field set to
+# 'Main Tools', we reject it explicitly — no way to bypass via the API.
+ALLOWED_FEEDS = {'Community'}
 ALLOWED_COLORS = {'#22d3ee', '#a855f7', '#ec4899', '#4ade80'}
 
 
@@ -125,8 +129,10 @@ def main() -> int:
     fields = parse_issue_body(body)
 
     # --- Validate required fields ---
+    # Note: 'Feed' is intentionally NOT in this list. All user submissions
+    # go to the Community feed — the Main Tools feed is maintainer-curated.
     required = ['Tool name', 'Author', 'Repository URL', 'Loadstring',
-                'Category', 'Feed', 'Description']
+                'Category', 'Description']
     missing = [f for f in required if not fields.get(f)]
     if missing:
         write_result(ok=False, reason=f'Missing required fields: {", ".join(missing)}.')
@@ -137,7 +143,11 @@ def main() -> int:
     repo = fields['Repository URL'].strip()
     loadstring = fields['Loadstring'].strip()
     category = fields['Category'].strip()
-    feed = fields['Feed'].strip()
+    # Hardcoded: user submissions always go to Community. If someone hand-
+    # edits the issue body to include a 'Feed' field, we validate it below
+    # and reject 'Main Tools' explicitly.
+    submitted_feed = fields.get('Feed', '').strip()
+    feed = 'Community'
     description = fields['Description'].strip()
     tags_raw = fields.get('Tags', '').strip()
     icon = fields.get('Icon initials (optional)', '').strip()
@@ -147,8 +157,11 @@ def main() -> int:
     if category not in ALLOWED_CATEGORIES:
         write_result(ok=False, reason=f'Invalid category "{category}". Must be one of: {", ".join(sorted(ALLOWED_CATEGORIES))}.')
         return 1
-    if feed not in ALLOWED_FEEDS:
-        write_result(ok=False, reason=f'Invalid feed "{feed}". Must be "Main Tools" or "Community".')
+    # Explicit guard: if a hand-edited issue body tries to set Feed to
+    # 'Main Tools', reject it. This makes the policy enforced in code, not
+    # just by the form — no way to bypass via the API.
+    if submitted_feed and submitted_feed not in ALLOWED_FEEDS:
+        write_result(ok=False, reason=f'Feed "{submitted_feed}" is not allowed for user submissions. All submissions go to the Community feed — the Main Tools feed is maintainer-curated. Remove the Feed field from your issue and resubmit.')
         return 1
     if icon_color and icon_color not in ALLOWED_COLORS:
         write_result(ok=False, reason=f'Invalid icon color "{icon_color}". Must be one of: {", ".join(sorted(ALLOWED_COLORS))}.')
