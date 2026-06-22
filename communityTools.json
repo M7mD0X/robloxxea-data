@@ -1,7 +1,7 @@
 {
   "_meta": {
     "name": "RobloxXea \u2014 Community Tools Feed",
-    "version": "2.0.1",
+    "version": "2.0.2",
     "updated": "2026-06-22",
     "description": "Auto-updating community library. Every loadstring here has been HTTP-verified (HTTP 200 + real Lua source) against its canonical GitHub repository. In production, host this file at a raw GitHub URL (see CommunityTools.tsx) and re-fetch on every app launch. Same shape as mainTools.json so the same ToolCard renders both feeds."
   },
@@ -185,6 +185,26 @@
       "verified": true,
       "lastVerified": "2026-06-22",
       "verifiedSizeBytes": 15736
+    },
+    {
+      "id": "orion-library-re-test",
+      "name": "Orion Library (Re-test)",
+      "author": "OrionLibrary",
+      "category": "UI Library",
+      "description": "Re-testing the submission flow after switching back to GITHUB_TOKEN (toggle now enabled, PAT secret removed).",
+      "loadstring": "loadstring(game:HttpGet('https://raw.githubusercontent.com/OrionLibrary/Orion/main/source.lua'))()",
+      "repo": "https://github.com/OrionLibrary/Orion",
+      "icon": "OR",
+      "iconColor": "#22d3ee",
+      "tags": [
+        "ui",
+        "library",
+        "test"
+      ],
+      "featured": false,
+      "verified": true,
+      "lastVerified": "2026-06-22",
+      "verifiedSizeBytes": 43238
     }
   ]
 }
